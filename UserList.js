@@ -1,7 +1,8 @@
 import Card from "../UI/Card"
+import './UserList.css'
 
 const UserList = props =>{
-    return <Card>
+    return <Card className='users'>
         <ul>
             {props.users.map( user => 
                 <li key={user.id}>
