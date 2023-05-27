@@ -3,41 +3,45 @@ import Button from "../UI/Button";
 import "./AddUser.css";
 import React from "react";
 import Wrapper from "../Helpers/Wrapper";
-import { useState, useRef } from "react";
+import { useState} from "react";
 import ErrorModal from "../UI/ErrorModal";
 
 const AddUser = (props) => {
-  const nameInputRef = useRef();
-  const ageInputRef = useRef();
-  // const [enteredName, setEnteredName] = useState("");
-  // const [enteredAge, setEnteredAge] = useState("");
+  // const nameInputRef = useRef();
+  // const ageInputRef = useRef();
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredAge, setEnteredAge] = useState("");
+  const [enteredCollege, setEnteredCollege] = useState("")
   const [error, setError] = useState();
-  // const changeAgeHandler = (e) => {
-  //   setEnteredAge(e.target.value);
-  // };
-  // const changeNameHandler = (e) => {
-  //   setEnteredName(e.target.value);
-  // };
+  const changeAgeHandler = (e) => {
+    setEnteredAge(e.target.value);
+  };
+  const changeNameHandler = (e) => {
+    setEnteredName(e.target.value);
+  };
+  const changeCollegeHandler =(e) =>{
+    setEnteredCollege(e.target.value)
+  }
   const errorHandler = () => {
     setError(null);
   };
   const addNewUSerHAndler = (event) => {
     event.preventDefault();
-    const enteredName = nameInputRef.current.value;
-    const enteredAge = ageInputRef.current.value;
-    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
-      setError({ title: "Wrong Inputs", msg: "Enter valid Name and Age" });
+    // const enteredName = nameInputRef.current.value;
+    // const enteredAge = ageInputRef.current.value;
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0 ||enteredCollege.trim().length === 0) {
+      setError({ title: "Wrong Inputs", msg: "Enter valid Name,College and Age" });
       return;
     }
     if (+enteredAge < 1) {
       setError({ title: "Wrong Age", msg: "Enter valid Age" });
       return;
     }
-    props.onAddUser(enteredName, enteredAge);
-    nameInputRef.current.value = "";
-    ageInputRef.current.value = "";
-    // setEnteredAge("");
-    // setEnteredName("");
+    props.onAddUser(enteredName, enteredAge,enteredCollege);
+    // nameInputRef.current.value = "";
+    // ageInputRef.current.value = "";
+    setEnteredAge("");
+    setEnteredName("");
   };
   return (
     <Wrapper>
@@ -54,9 +58,9 @@ const AddUser = (props) => {
             className="input_input"
             type="text"
             id="uname"
-            ref={nameInputRef}
-            // value={enteredName}
-            // onChange={changeNameHandler}
+            // ref={nameInputRef}
+            value={enteredName}
+            onChange={changeNameHandler}
           ></input>
           <label className="input_label" htmlFor="age">
             {" "}
@@ -66,10 +70,17 @@ const AddUser = (props) => {
             className="input_input"
             type="number"
             id="age"
-            ref={ageInputRef}
-            // value={enteredAge}
-            // onChange={changeAgeHandler}
+            // ref={ageInputRef}
+            value={enteredAge}
+            onChange={changeAgeHandler}
           ></input>
+          <label className="input_label" htmlFor="college">{" "}Enter College Name</label>
+          <input className="input_input"
+          type="text"
+          id="college"
+          value={enteredCollege}
+          onChange={changeCollegeHandler}>
+          </input>
           <Button type="submit">Add New User</Button>
         </form>
       </Card>
